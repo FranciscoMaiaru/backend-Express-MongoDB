@@ -4,6 +4,7 @@ const {Cliente} = require('../models/clientes');
 const controllers = {
     myCliente: async (req,res) => {
         try {
+            console.log(req.user);
             const {clienteId} = req.user;
             
             if (!clienteId) {
@@ -31,7 +32,8 @@ const controllers = {
             if (!clienteId) {
                 return res.status(400).json({ msg: "La propiedad clienteId no está presente o es inválida" });
             }
-
+            // borrar las cuentas del cliente ( y sus transacciones)
+            // matar el token
             const borrarCliente = await Cliente.deleteOne({clienteId: clienteId});
             if (borrarCliente.deletedCount > 0)
                 res.status(201).json(`${borrarCliente.deletedCount} cliente eliminado correctamente` );

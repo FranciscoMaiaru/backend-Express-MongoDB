@@ -3,9 +3,16 @@ const {Cuenta} = require('../models/cuentas');
 const controllers = {
     newCuenta: async (req,res) => {
         try {
+            // controlar si un cliente ya tiene una cuenta de ese tipo. Puede ser una validacion middleware antes 
+            req.body.clienteId = req.user.clienteId;
+            req.body.saldo = 0;
+            const fecha = new Date();
+            req.body.fecha_apertura = fecha.toLocaleDateString('en-GB');
+            console.log(req.body);
             const cuenta = new Cuenta(req.body);
             await cuenta.save();
             res.status(201).json(cuenta);
+            // agregar la cuenta al cliente , para usarla despues facil desde req.user.cuentas
         } catch (error) {
             res.status(501).json({
                 msg: "No se puede crear la cuenta",

@@ -8,7 +8,7 @@ const cuentaSchema = new Schema({
         unique: true,
         immutable: true
     },
-    cliente_id: {
+    clienteId: {
         type: String,
         required: true,
         immutable: true

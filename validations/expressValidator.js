@@ -13,7 +13,7 @@ const validation = (req,res,next) => {
 const passwordVal = body('contraseña').isLength({min: 8}).withMessage('La contraseña debe tener al menos 8 caracteres');
 const emailVal = body('email').isEmail().withMessage('debe introducir un email válido');
 const estadoCuentaVal = body('estado').isIn(['activo','inactivo']).withMessage('Estado invalido');
-const nombreCliVal =body('nombre').notEmpty().withMessage('El campo no puede quedar vacio') ;
+const nombreCliVal =body('nombre').notEmpty().withMessage('El campo no puede quedar vacio').isString().withMessage('El nombre debe ser una cadena de caracteres') ;
 const telefonoCliVal =  body('telefono').isNumeric().withMessage('Telefono Invalido').notEmpty().withMessage('El campo no puede quedar vacio');
 const direccionCliVal = body('direccion').notEmpty().withMessage('El campo no puede quedar vacio');
 const activoCliVal = body('activo').notEmpty().withMessage('El campo no puede quedar vacio').isBoolean().withMessage('Status booleano no valido');
@@ -38,7 +38,9 @@ const expressValidator = {
         estadoCuentaVal,
         validation
     ],
-    newCuenta: [body('tipo_cuenta').isIn(['ahorros','corriente']).withMessage('No es un tipo de cuenta valido'),
+    newCuenta: [
+        body('cuentaId').notEmpty().withMessage('El campo no puede quedar vacio').isString().withMessage('El nombre debe ser una cadena de caracteres'),
+        body('tipo_cuenta').isIn(['ahorros','corriente']).withMessage('No es un tipo de cuenta valido'),
         estadoCuentaVal,
         validation
     ],
@@ -53,7 +55,11 @@ const expressValidator = {
         validation
     ],
     logeoCliente: [emailVal,passwordVal,validation],
-    registroCliente: [emailVal,passwordVal,nombreCliVal,telefonoCliVal,direccionCliVal,activoCliVal, validation]
+    registroCliente: [
+        body('clienteId').notEmpty().withMessage('El campo no puede quedar vacio').isString().withMessage('El nombre debe ser una cadena de caracteres'),
+        emailVal,passwordVal,nombreCliVal,telefonoCliVal,direccionCliVal,activoCliVal, 
+        validation
+    ]
 
 };
 
