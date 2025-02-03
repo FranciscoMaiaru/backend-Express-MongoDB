@@ -23,6 +23,7 @@ const expressValidator = {
     newTransaccion: [ 
         body('monto').isNumeric().withMessage('El monto debe ser un numero'),  // no controlo > 0 porque ya lo hace el modelo
         body('tipo').isIn(['transferencia','deposito','retiro']).withMessage('El tipo de transaccion es inválido'),
+        body('cuentaDestino').optional().isString().withMessage('La cuenta destino debe ser una cadena de texto'),
         validation
     ],
     updateCliente: [
