@@ -20,7 +20,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('/', indexRouter);
+
+
+app.use('/', indexRouter);
 
 
 app.get('/allclients', async (req,res) => {  // Desde afuera sin auth se permite un 'GET' de clientes. // Elegi no validar campos en este caso
